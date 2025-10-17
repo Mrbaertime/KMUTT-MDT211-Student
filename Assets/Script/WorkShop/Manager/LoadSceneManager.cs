@@ -8,7 +8,7 @@ public class LoadSceneManager : MonoBehaviour
    
     [Header("Loading Screen Reference")]
     public GameObject loadingScreenPanel; // อ้างอิงถึง Panel ที่ใช้เป็นหน้าจอโหลด
-
+    public static LoadSceneManager instance;
     // 3. Singleton Initialization
  
 
@@ -20,6 +20,20 @@ public class LoadSceneManager : MonoBehaviour
     public void LoadNewScene(string sceneName)
     {
         StartCoroutine(LoadSceneCoroutine(sceneName));
+    }
+
+    private void Awake()
+    {
+        // ตรวจสอบว่ามี Instance อยู่แล้วหรือไม่
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
